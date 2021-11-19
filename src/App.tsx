@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Button from "./components/Button/Button";
+import CardProductList from "./components/CardProductList/CardProductList";
+import { carsList } from "./constants/carsList";
 
-function App() {
+const App = () => {
+  const [active, setIndex] = useState(0);
+  const getCars = (event: React.SyntheticEvent) => {
+    const target = event.target as HTMLElement;
+    const index = Number(target.getAttribute("data-type"));
+    setIndex(index);
+  };
+  const buttons = carsList.map((item, index) => (
+    <Button type={index} key={item.id} title={item.mark} onClick={getCars} />
+  ));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="wrapper-btn">{buttons}</div>
+      <div>
+        <CardProductList {...carsList[active]} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
